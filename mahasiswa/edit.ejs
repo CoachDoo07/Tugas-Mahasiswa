@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Mahasiswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<%- include('../partials/_navbar') %>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h5 class="mb-0">Edit Biodata Mahasiswa</h5>
+                </div>
+                <div class="card-body">
+                    <form action="/mahasiswa/update/<%= mahasiswa.id_mahasiswa %>" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label">NRP</label>
+                            <input type="text" name="nrp" value="<%= mahasiswa.nrp %>" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nama</label>
+                            <input type="text" name="nama" value="<%= mahasiswa.nama %>" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" class="form-select" required>
+                                <option value="">-- Pilih Jenis Kelamin --</option>
+                                <option value="Laki-laki" <%= mahasiswa.jenis_kelamin === 'Laki-laki' ? 'selected' : '' %>>Laki-laki</option>
+                                <option value="Perempuan" <%= mahasiswa.jenis_kelamin === 'Perempuan' ? 'selected' : '' %>>Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Alamat</label>
+                            <textarea name="alamat" class="form-control" rows="3" required><%= mahasiswa.alamat %></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Foto</label>
+                            <% if (mahasiswa.foto) { %>
+                                <div class="mb-3">
+                                    <img src="/static/<%= mahasiswa.foto %>" alt="Foto Mahasiswa" style="width: 180px; height: 180px; object-fit: cover; object-position: center;" class="img-thumbnail">
+                                </div>
+                            <% } %>
+                            <input type="file" name="foto" class="form-control" accept="image/*">
+                            <div class="form-text">Upload foto baru jika ingin mengganti foto lama.</div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success">Update</button>
+                            <a href="/mahasiswa" class="btn btn-secondary">Batal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

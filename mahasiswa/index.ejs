@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Mahasiswa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<%- include('../partials/_navbar') %>
+
+<div class="container mt-4">
+    <% if (messages.success && messages.success.length > 0) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <%= messages.success[0] %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <% } %>
+    <% if (messages.error && messages.error.length > 0) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <%= messages.error[0] %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <% } %>
+
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Daftar Biodata Mahasiswa</h5>
+            <a href="/mahasiswa/create" class="btn btn-sm btn-success">+ Tambah Mahasiswa</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>NRP</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Alamat</th>
+                            <th>Foto</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (data.length === 0) { %>
+                            <tr>
+                                <td class="text-center" colspan="7">Belum ada data mahasiswa.</td>
+                            </tr>
+                        <% } else { %>
+                            <% data.forEach(function(item) { %>
+                                <tr>
+                                    <td class="text-center"><%= item.id_mahasiswa %></td>
+                                    <td><%= item.nrp %></td>
+                                    <td><%= item.nama %></td>
+                                    <td><%= item.jenis_kelamin %></td>
+                                    <td><%= item.alamat %></td>
+                                    <td class="text-center">
+                                        <% if (item.foto) { %>
+                                            <img src="/static/<%= item.foto %>" alt="Foto" style="width: 80px; height: 80px; object-fit: cover; object-position: center;" />
+                                        <% } else { %>
+                                            -
+                                        <% } %>
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="/mahasiswa/edit/<%= item.id_mahasiswa %>" class="btn btn-sm btn-warning me-1">Edit</a>
+                                        <a href="/mahasiswa/delete/<%= item.id_mahasiswa %>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
